@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FarmaMaster - Plataforma de Farmacología Médica</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .perspective { perspective: 1000px; }
+    .transform-style-3d { transform-style: preserve-3d; }
+    .backface-hidden { backface-visibility: hidden; }
+    .rotate-y-180 { transform: rotateY(180deg); }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Barra de Carga Manual si se abre directamente como archivo local (file:///) -->
+  <div id="file-loader-bar" class="hidden bg-amber-500/10 border-b border-amber-500/30 px-4 py-2.5 text-xs text-amber-300 flex flex-wrap items-center justify-between gap-2">
+    <span>💡 Si abres el archivo localmente con doble clic, selecciona <strong>farma_db.json</strong> una sola vez:</span>
+    <input type="file" id="json-file-input" accept=".json" onchange="loadJsonFromFile(event)" class="text-xs text-slate-300 file:mr-2 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-amber-600 file:text-white hover:file:bg-amber-500 cursor-pointer">
+  </div>
+
+  <!-- Navbar -->
+  <header class="bg-slate-800/90 backdrop-blur border-b border-slate-700 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <span class="text-2xl">💊</span>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-white leading-tight">FarmaMaster</h1>
+          <p class="text-xs text-emerald-400 font-medium">Unidades I a IV • Goodman & Gilman (14.ª ed.)</p>
+        </div>
+      </div>
+
+      <!-- Filtros Dinámicos -->
+      <div class="flex items-center space-x-2">
+        <select id="unit-select" onchange="onUnitChange()" class="bg-slate-900 border border-slate-700 text-xs sm:text-sm rounded-lg px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-emerald-500 font-medium max-w-[200px] sm:max-w-xs truncate">
+          <option value="all">🌐 Todas las Unidades</option>
+        </select>
+        <select id="chapter-select" onchange="onChapterChange()" class="bg-slate-900 border border-slate-700 text-xs sm:text-sm rounded-lg px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-emerald-500 font-medium max-w-[150px] sm:max-w-xs truncate">
+          <option value="all">📖 Todos los Capítulos</option>
+        </select>
+      </div>
+
+      <!-- Pestañas de Vista -->
+      <nav class="flex space-x-1 sm:space-x-2">
+        <button onclick="switchTab('dashboard')" id="tab-dashboard" class="nav-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition bg-emerald-600 text-white">Dashboard</button>
+        <button onclick="switchTab('flashcards')" id="tab-flashcards" class="nav-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition hover:bg-slate-700 text-slate-300">Flashcards</button>
+        <button onclick="switchTab('quiz')" id="tab-quiz" class="nav-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition hover:bg-slate-700 text-slate-300">Quiz</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6 flex-1 w-full">
+
+    <!-- SECCIÓN 1: DASHBOARD -->
+    <section id="view-dashboard" class="space-y-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-slate-800 border border-slate-700 p-4 rounded-xl col-span-2 md:col-span-1 shadow-lg">
+          <p class="text-xs text-slate-400 font-medium">Dominio de la Selección</p>
+          <div class="flex items-end justify-between mt-1">
+            <h2 id="mastery-percent" class="text-3xl font-extrabold text-white">0%</h2>
+            <span class="text-xs text-slate-400" id="mastery-count">0 / 0</span>
+          </div>
+          <div class="w-full bg-slate-700 h-2 rounded-full mt-3 overflow-hidden">
+            <div id="mastery-bar" class="bg-emerald-500 h-full w-0 transition-all duration-500"></div>
+          </div>
+        </div>
+
+        <div class="bg-slate-800 border border-slate-700 p-4 rounded-xl flex items-center space-x-3 shadow-lg">
+          <div class="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-lg text-lg">🟢</div>
+          <div>
+            <p class="text-xs text-slate-400">Dominados</p>
+            <p id="count-mastered" class="text-xl font-bold text-white">0</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-800 border border-slate-700 p-4 rounded-xl flex items-center space-x-3 shadow-lg">
+          <div class="p-2.5 bg-amber-500/10 text-amber-400 rounded-lg text-lg">🟡</div>
+          <div>
+            <p class="text-xs text-slate-400">En Repaso</p>
+            <p id="count-review" class="text-xl font-bold text-white">0</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-800 border border-slate-700 p-4 rounded-xl flex items-center space-x-3 shadow-lg">
+          <div class="p-2.5 bg-rose-500/10 text-rose-400 rounded-lg text-lg">🔴</div>
+          <div>
+            <p class="text-xs text-slate-400">Por Aprender</p>
+            <p id="count-pending" class="text-xl font-bold text-white">0</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg sm:text-xl font-bold text-white">Fichas de Fármacos</h2>
+          <span class="text-xs text-slate-400">Toca el botón de estado para cambiar tu nivel de dominio</span>
+        </div>
+        <div id="drugs-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: FLASHCARDS -->
+    <section id="view-flashcards" class="hidden flex flex-col items-center justify-center space-y-6 max-w-xl mx-auto py-4">
+      <div class="flex justify-between items-center w-full px-2">
+        <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold" id="flashcard-counter">Tarjeta 1 de 1</span>
+        <button onclick="shuffleFlashcards()" class="text-xs text-emerald-400 hover:underline font-medium">🔀 Mezclar</button>
+      </div>
+
+      <div class="perspective w-full h-84 sm:h-80 cursor-pointer" onclick="toggleCardFlip()">
+        <div id="card-inner" class="relative w-full h-full duration-500 transform-style-3d transition-transform">
+          <!-- Cara Frente -->
+          <div class="absolute inset-0 bg-slate-800 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between backface-hidden shadow-2xl">
+            <div class="flex justify-between items-center">
+              <span class="text-[11px] font-semibold px-2.5 py-1 bg-slate-700 text-slate-300 rounded-full" id="fc-category">Categoría</span>
+              <span class="text-[10px] text-slate-400 font-mono" id="fc-tag">Unidad</span>
+            </div>
+            <div class="text-center my-auto">
+              <p class="text-base sm:text-lg font-semibold text-white px-2 leading-snug" id="fc-question">Cargando...</p>
+            </div>
+            <p class="text-center text-xs text-slate-500">Toca la tarjeta para ver la respuesta ↻</p>
+          </div>
+          <!-- Cara Reverso -->
+          <div class="absolute inset-0 bg-slate-800 border-2 border-emerald-500/50 rounded-2xl p-6 flex flex-col justify-between backface-hidden rotate-y-180 shadow-2xl">
+            <span class="text-[11px] font-semibold px-2.5 py-1 bg-emerald-900/50 text-emerald-300 rounded-full w-fit">Perla Clínica / Concepto Clave</span>
+            <div class="text-center my-auto overflow-y-auto px-2">
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed" id="fc-answer">Respuesta...</p>
+            </div>
+            <p class="text-center text-xs text-slate-500">Autoevalúate para avanzar ↓</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-3 w-full">
+        <button onclick="nextCard()" class="py-2.5 px-3 bg-rose-600/20 border border-rose-500/40 text-rose-300 hover:bg-rose-600 hover:text-white rounded-xl text-xs sm:text-sm font-semibold transition">🔴 Difícil</button>
+        <button onclick="nextCard()" class="py-2.5 px-3 bg-amber-600/20 border border-amber-500/40 text-amber-300 hover:bg-amber-600 hover:text-white rounded-xl text-xs sm:text-sm font-semibold transition">🟡 Dudoso</button>
+        <button onclick="nextCard()" class="py-2.5 px-3 bg-emerald-600/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-600 hover:text-white rounded-xl text-xs sm:text-sm font-semibold transition">🟢 Dominado</button>
+      </div>
+
+      <div class="flex justify-between w-full px-2">
+        <button onclick="prevCard()" class="text-slate-400 hover:text-white text-xs sm:text-sm font-semibold">← Anterior</button>
+        <button onclick="nextCard()" class="text-slate-400 hover:text-white text-xs sm:text-sm font-semibold">Siguiente →</button>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: QUIZ -->
+    <section id="view-quiz" class="hidden max-w-2xl mx-auto space-y-6">
+      <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl shadow-xl">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-xs font-semibold px-2.5 py-1 bg-emerald-900/40 text-emerald-300 rounded-full" id="quiz-question-num">Pregunta 1 de 1</span>
+          <span class="text-xs text-slate-400" id="quiz-score">Aciertos: 0</span>
+        </div>
+
+        <p class="text-base sm:text-lg font-medium text-white mb-6 leading-relaxed" id="quiz-question">Cargando pregunta...</p>
+
+        <div id="quiz-options" class="space-y-3"></div>
+
+        <div id="quiz-feedback" class="mt-6 p-4 rounded-xl hidden">
+          <p class="text-sm font-semibold mb-1" id="feedback-title"></p>
+          <p class="text-xs sm:text-sm leading-relaxed" id="feedback-desc"></p>
+          <button onclick="nextQuizQuestion()" class="mt-4 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg transition">Siguiente Pregunta →</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-900 border-t border-slate-800 text-center py-4 text-xs text-slate-500">
+    FarmaMaster • Plataforma de Estudio de Farmacología Médica • Almacenamiento local activo en navegador.
+  </footer>
+
+  <script>
+    let DB = { units: [], drugs: [], flashcards: [], quizzes: [] };
+    const STORAGE_KEY = 'farmamaster_multi_progress';
+    let progressState = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { drugs: {} };
+    let selectedUnit = 'all';
+    let selectedChapter = 'all';
+
+    async function loadData() {
+      try {
+        const response = await fetch('./farma_db.json');
+        if (!response.ok) throw new Error('Fetch failed');
+        DB = await response.json();
+        initializeApp();
+      } catch (err) {
+        console.warn("Carga fetch local bloqueada por navegador; mostrando opción manual.");
+        document.getElementById('file-loader-bar').classList.remove('hidden');
+      }
+    }
+
+    function loadJsonFromFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          DB = JSON.parse(e.target.result);
+          document.getElementById('file-loader-bar').classList.add('hidden');
+          initializeApp();
+        } catch (error) {
+          alert('El archivo cargado no es un JSON válido.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function initializeApp() {
+      const unitSelect = document.getElementById('unit-select');
+      unitSelect.innerHTML = '<option value="all">🌐 Todas las Unidades</option>';
+      DB.units.forEach(u => {
+        const opt = document.createElement('option');
+        opt.value = u.id;
+        opt.innerText = u.name;
+        unitSelect.appendChild(opt);
+      });
+
+      populateChapterDropdown();
+      updateDashboardUI();
+      resetFlashcards();
+      resetQuiz();
+    }
+
+    function populateChapterDropdown() {
+      const chapterSelect = document.getElementById('chapter-select');
+      chapterSelect.innerHTML = '<option value="all">📖 Todos los Capítulos</option>';
+
+      let candidateDrugs = selectedUnit === 'all' 
+        ? DB.drugs 
+        : DB.drugs.filter(d => d.unit === selectedUnit);
+
+      const uniqueChapters = [...new Set(candidateDrugs.map(d => d.chapter))].sort();
+      uniqueChapters.forEach(chap => {
+        const opt = document.createElement('option');
+        opt.value = chap;
+        opt.innerText = chap;
+        chapterSelect.appendChild(opt);
+      });
+      selectedChapter = 'all';
+    }
+
+    function onUnitChange() {
+      selectedUnit = document.getElementById('unit-select').value;
+      populateChapterDropdown();
+      updateDashboardUI();
+      resetFlashcards();
+      resetQuiz();
+    }
+
+    function onChapterChange() {
+      selectedChapter = document.getElementById('chapter-select').value;
+      updateDashboardUI();
+      resetFlashcards();
+      resetQuiz();
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progressState));
+      updateDashboardUI();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-600', 'text-white');
+        btn.classList.add('text-slate-300', 'hover:bg-slate-700');
+      });
+      document.getElementById(`tab-${tabId}`).classList.add('bg-emerald-600', 'text-white');
+      document.getElementById(`tab-${tabId}`).classList.remove('hover:bg-slate-700');
+
+      ['dashboard', 'flashcards', 'quiz'].forEach(id => {
+        document.getElementById(`view-${id}`).classList.toggle('hidden', id !== tabId);
+      });
+    }
+
+    /* Filtrado general */
+    function filterItems(items) {
+      return items.filter(item => {
+        const unitMatch = selectedUnit === 'all' || item.unit === selectedUnit;
+        const chapMatch = selectedChapter === 'all' || item.chapter === selectedChapter;
+        return unitMatch && chapMatch;
+      });
+    }
+
+    /* Dashboard */
+    function updateDashboardUI() {
+      const filtered = filterItems(DB.drugs);
+      const total = filtered.length;
+      let mastered = 0, review = 0, pending = 0;
+
+      filtered.forEach(d => {
+        const s = progressState.drugs[d.id] || 'pending';
+        if (s === 'mastered') mastered++;
+        else if (s === 'review') review++;
+        else pending++;
+      });
+
+      const pct = total > 0 ? Math.round((mastered / total) * 100) : 0;
+      document.getElementById('mastery-percent').innerText = `${pct}%`;
+      document.getElementById('mastery-count').innerText = `${mastered} / ${total} dominados`;
+      document.getElementById('mastery-bar').style.width = `${pct}%`;
+
+      document.getElementById('count-mastered').innerText = mastered;
+      document.getElementById('count-review').innerText = review;
+      document.getElementById('count-pending').innerText = pending;
+
+      renderDrugCards(filtered);
+    }
+
+    function cycleDrugStatus(id) {
+      const current = progressState.drugs[id] || 'pending';
+      const order = { 'pending': 'review', 'review': 'mastered', 'mastered': 'pending' };
+      progressState.drugs[id] = order[current];
+      saveState();
+    }
+
+    function renderDrugCards(drugs) {
+      const container = document.getElementById('drugs-container');
+      container.innerHTML = '';
+
+      if (drugs.length === 0) {
+        container.innerHTML = '<p class="text-slate-400 text-sm italic col-span-2 py-4">No hay fármacos bajo los filtros seleccionados.</p>';
+        return;
+      }
+
+      drugs.forEach(d => {
+        const st = progressState.drugs[d.id] || 'pending';
+        const badgeColor = st === 'mastered' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' :
+                           st === 'review' ? 'bg-amber-500/20 text-amber-300 border-amber-500/40' :
+                           'bg-rose-500/20 text-rose-300 border-rose-500/40';
+        const badgeLabel = st === 'mastered' ? '🟢 Dominado' : st === 'review' ? '🟡 En Repaso' : '🔴 Por Aprender';
+
+        const card = document.createElement('div');
+        card.className = "bg-slate-800 border border-slate-700/80 rounded-xl p-5 hover:border-slate-600 transition flex flex-col justify-between shadow";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <div>
+                <span class="text-[11px] font-semibold tracking-wider uppercase text-emerald-400">${d.chapter} • ${d.category}</span>
+                <h3 class="text-base sm:text-lg font-bold text-white">${d.name}</h3>
+              </div>
+              <button onclick="cycleDrugStatus('${d.id}')" class="px-2.5 py-1 rounded-full text-xs font-semibold border ${badgeColor} transition hover:scale-105 shrink-0">
+                ${badgeLabel}
+              </button>
+            </div>
+            <p class="text-xs text-slate-300 mb-2 leading-relaxed"><strong class="text-slate-400">Mecanismo:</strong> ${d.mechanism}</p>
+            <p class="text-xs text-slate-300 mb-2 leading-relaxed"><strong class="text-slate-400">Cinética:</strong> ${d.kinetics}</p>
+            <p class="text-xs text-slate-300 mb-2 leading-relaxed"><strong class="text-slate-400">Indicaciones:</strong> ${d.clinical}</p>
+            <p class="text-xs text-amber-300/90 leading-relaxed"><strong class="text-slate-400">RAMs / Perlas:</strong> ${d.rams}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    /* Flashcards */
+    let currentFcIndex = 0;
+    let isFlipped = false;
+
+    function resetFlashcards() {
+      currentFcIndex = 0;
+      isFlipped = false;
+      const inner = document.getElementById('card-inner');
+      if (inner) inner.classList.remove('rotate-y-180');
+      renderCurrentFlashcard();
+    }
+
+    function renderCurrentFlashcard() {
+      const list = filterItems(DB.flashcards);
+      if (list.length === 0) {
+        document.getElementById('flashcard-counter').innerText = '0 de 0';
+        document.getElementById('fc-category').innerText = 'Sin resultados';
+        document.getElementById('fc-tag').innerText = '';
+        document.getElementById('fc-question').innerText = 'No hay flashcards para los filtros seleccionados.';
+        document.getElementById('fc-answer').innerText = '—';
+        return;
+      }
+
+      const card = list[currentFcIndex];
+      document.getElementById('flashcard-counter').innerText = `Tarjeta ${currentFcIndex + 1} de ${list.length}`;
+      document.getElementById('fc-category').innerText = card.category;
+      document.getElementById('fc-tag').innerText = `${card.unit.toUpperCase()} • ${card.chapter}`;
+      document.getElementById('fc-question').innerText = card.question;
+      document.getElementById('fc-answer').innerText = card.answer;
+
+      if (isFlipped) toggleCardFlip();
+    }
+
+    function toggleCardFlip() {
+      const list = filterItems(DB.flashcards);
+      if (list.length === 0) return;
+      isFlipped = !isFlipped;
+      document.getElementById('card-inner').classList.toggle('rotate-y-180', isFlipped);
+    }
+
+    function nextCard() {
+      const list = filterItems(DB.flashcards);
+      if (list.length <= 1) return;
+      currentFcIndex = (currentFcIndex + 1) % list.length;
+      renderCurrentFlashcard();
+    }
+
+    function prevCard() {
+      const list = filterItems(DB.flashcards);
+      if (list.length <= 1) return;
+      currentFcIndex = (currentFcIndex - 1 + list.length) % list.length;
+      renderCurrentFlashcard();
+    }
+
+    function shuffleFlashcards() {
+      const list = filterItems(DB.flashcards);
+      list.sort(() => Math.random() - 0.5);
+      currentFcIndex = 0;
+      renderCurrentFlashcard();
+    }
+
+    /* Quiz */
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+
+    function resetQuiz() {
+      currentQuizIndex = 0;
+      quizScore = 0;
+      renderQuiz();
+    }
+
+    function renderQuiz() {
+      const list = filterItems(DB.quizzes);
+      const optsContainer = document.getElementById('quiz-options');
+      const feedback = document.getElementById('quiz-feedback');
+      feedback.classList.add('hidden');
+
+      if (list.length === 0) {
+        document.getElementById('quiz-question-num').innerText = '0 de 0';
+        document.getElementById('quiz-score').innerText = 'Aciertos: 0';
+        document.getElementById('quiz-question').innerText = 'No hay preguntas disponibles bajo los filtros seleccionados.';
+        optsContainer.innerHTML = '';
+        return;
+      }
+
+      const q = list[currentQuizIndex];
+      document.getElementById('quiz-question-num').innerText = `Pregunta ${currentQuizIndex + 1} de ${list.length}`;
+      document.getElementById('quiz-score').innerText = `Aciertos: ${quizScore}`;
+      document.getElementById('quiz-question').innerText = `[${q.chapter}] ${q.question}`;
+
+      optsContainer.innerHTML = '';
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "w-full text-left p-3.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700/60 text-xs sm:text-sm text-slate-200 font-medium transition flex items-center justify-between";
+        btn.innerHTML = `<span>${opt}</span><span class="text-xs text-slate-500 font-mono ml-2">[${String.fromCharCode(65 + idx)}]</span>`;
+        btn.onclick = () => selectOption(idx);
+        optsContainer.appendChild(btn);
+      });
+    }
+
+    function selectOption(selectedIndex) {
+      const list = filterItems(DB.quizzes);
+      const q = list[currentQuizIndex];
+      const buttons = document.querySelectorAll('#quiz-options button');
+      buttons.forEach(btn => btn.disabled = true);
+
+      const feedback = document.getElementById('quiz-feedback');
+      const title = document.getElementById('feedback-title');
+      const desc = document.getElementById('feedback-desc');
+      feedback.classList.remove('hidden', 'bg-rose-900/30', 'border-rose-700', 'bg-emerald-900/30', 'border-emerald-700');
+
+      if (selectedIndex === q.correct) {
+        quizScore++;
+        document.getElementById('quiz-score').innerText = `Aciertos: ${quizScore}`;
+        feedback.classList.add('bg-emerald-900/30', 'border', 'border-emerald-700', 'text-emerald-200');
+        title.innerText = "¡Correcto!";
+        buttons[selectedIndex].classList.add('bg-emerald-700', 'border-emerald-500', 'text-white');
+      } else {
+        feedback.classList.add('bg-rose-900/30', 'border', 'border-rose-700', 'text-rose-200');
+        title.innerText = "Incorrecto";
+        buttons[selectedIndex].classList.add('bg-rose-800', 'border-rose-600', 'text-white');
+        buttons[q.correct].classList.add('bg-emerald-700/60', 'border-emerald-500', 'text-white');
+      }
+
+      desc.innerText = q.explanation;
+    }
+
+    function nextQuizQuestion() {
+      const list = filterItems(DB.quizzes);
+      currentQuizIndex++;
+      if (currentQuizIndex < list.length) {
+        renderQuiz();
+      } else {
+        const container = document.getElementById('view-quiz');
+        container.innerHTML = `
+          <div class="bg-slate-800 border border-slate-700 p-8 rounded-2xl text-center space-y-4 shadow-xl">
+            <h3 class="text-2xl font-bold text-white">¡Módulo Finalizado!</h3>
+            <p class="text-slate-300">Puntaje obtenido: <span class="text-emerald-400 font-bold text-xl">${quizScore} / ${list.length}</span></p>
+            <p class="text-xs text-slate-400">Has repasado los reactivos seleccionados.</p>
+            <button onclick="location.reload()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition text-sm">Reiniciar Repaso</button>
+          </div>
+        `;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadData);
+  </script>
+</body>
+</html>

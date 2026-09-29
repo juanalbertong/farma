@@ -1,0 +1,395 @@
+{
+  "units": [
+    { "id": "u1", "name": "Primera Unidad: Sistema Nervioso Autónomo y Somático" },
+    { "id": "u2", "name": "Segunda Unidad: Cardiovascular, Renal, Pulmonar e Inflamación" },
+    { "id": "u3", "name": "Tercera Unidad: Endocrino, Digestivo y Antimicrobianos I" },
+    { "id": "u4", "name": "Cuarta Unidad: SNC, Sangre, Antimicrobianos II y Antivirales" }
+  ],
+  "drugs": [
+    {
+      "id": "u1_atropina",
+      "unit": "u1",
+      "chapter": "Cap. 11",
+      "name": "Atropina",
+      "category": "Antagonistas Muscarínicos",
+      "mechanism": "Antagonista competitivo reversible de todos los receptores muscarínicos (M1 a M5). Bloquea las respuestas a la acetilcolina en efectores parasimpáticos posganglionares.",
+      "kinetics": "Buena absorción oral; cruza rápidamente la barrera hematoencefálica y placenta. Eliminación mixta renal y hepática.",
+      "clinical": "Bradicardia sinusal sintomática aguda, antídoto en intoxicación por insecticidas organofosforados / carbamatos, midriasis y cicloplejía diagnósticas.",
+      "rams": "Xerostomía (boca seca), visión borrosa, midriasis, retención urinaria en varones prostáticos, taquicardia y rubor cutáneo atropínico."
+    },
+    {
+      "id": "u1_neostigmina",
+      "unit": "u1",
+      "chapter": "Cap. 12",
+      "name": "Neostigmina",
+      "category": "Inhibidores de Acetilcolinesterasa (Carbamatos)",
+      "mechanism": "Inactiva de forma reversible la AChE al carbamilar su sitio activo, prolongando la vida media de la acetilcolina endógena en las sinapsis colinérgicas.",
+      "kinetics": "Amonio cuaternario polar; NO cruza la barrera hematoencefálica. Eliminación renal.",
+      "clinical": "Reversión del bloqueo neuromuscular por relajantes no despolarizantes postcirugía, tratamiento de Miastenia Gravis, íleo paralítico posquirúrgico.",
+      "rams": "Hiperactividad colinérgica (sialorrea, hipermotilidad gastrointestinal, broncoespasmo y bradicardia); se coadministra con atropina para mitigar efectos muscarínicos."
+    },
+    {
+      "id": "u1_succinilcolina",
+      "unit": "u1",
+      "chapter": "Cap. 13",
+      "name": "Succinilcolina (Suxametonio)",
+      "category": "Bloqueadores Neuromusculares Despolarizantes",
+      "mechanism": "Agonista del receptor Nm en la unión neuromuscular que causa despolarización continua de la placa motora, impidiendo la repolarización (bloqueo Fase I).",
+      "kinetics": "Inicio de acción ultrarrápido (<60 s) y duración de 5 a 10 minutos. Hidrolizado rápidamente por la butirilcolinesterasa (colinesterasa plasmática).",
+      "clinical": "Intubación orotraqueal de secuencia rápida en urgencias y procedimientos quirúrgicos muy breves.",
+      "rams": "Fasciculaciones musculares, hiperpotasemia aguda letal en pacientes con quemaduras extensas o traumatismo mayor, e hipertermia maligna."
+    },
+    {
+      "id": "u1_furosemida",
+      "unit": "u2",
+      "chapter": "Cap. 29",
+      "name": "Furosemida",
+      "category": "Diuréticos de Asa",
+      "mechanism": "Inhibe el cotransportador electroneutro Na+/K+/2Cl- (NKCC2) en la rama ascendente gruesa del asa de Henle, aboliendo el gradiente osmótico medular cortico-papilar.",
+      "kinetics": "Inicio de acción rápido por vía IV (5 min). Se secreta al túbulo proximal mediante el sistema de transporte de aniones orgánicos (OAT).",
+      "clinical": "Edema pulmonar agudo, sobrecarga hídrica en insuficiencia cardíaca descompensada, cirrosis y síndrome nefrótico; crisis hipercalcémica.",
+      "rams": "Hipopotasemia grave, alcalosis metabólica hipoclorémica, hipocalcemia, hipomagnesemia, ototoxicidad dosis-dependiente e hiperuricemia."
+    },
+    {
+      "id": "u2_enalapril",
+      "unit": "u2",
+      "chapter": "Cap. 30/32",
+      "name": "Enalapril / Enalaprilat",
+      "category": "Inhibidores de la Enzima Convertidora de Angiotensina (IECA)",
+      "mechanism": "Inhibe la ECA (cininasa II), bloqueando la formación de Angiotensina II y la degradación de Bradicinina vasodilatadora.",
+      "kinetics": "Profármaco que requiere hidrólisis hepática al metabolito activo diácido enalaprilat. Eliminación renal.",
+      "clinical": "Hipertensión arterial, insuficiencia cardíaca con fracción de eyección reducida (ICFEr), nefropatía diabética con microalbuminuria.",
+      "rams": "Tos seca irritativa persistente, angioedema de cuello y vía aérea, hiperpotasemia e hipotensión de primera dosis. Teratogénico absoluto (contraindicado en embarazo)."
+    },
+    {
+      "id": "u2_nitroglicerina",
+      "unit": "u2",
+      "chapter": "Cap. 31",
+      "name": "Nitroglicerina (Trinitrato de glicerilo)",
+      "category": "Nitratos Orgánicos Antianginosos",
+      "mechanism": "Bioactivado por la aldehído deshidrogenasa mitocondrial-2 (ALDH-2) liberando óxido nítrico (NO), el cual estimula la guanilil ciclasa soluble, elevando GMPc y desfosforilando la miosina.",
+      "kinetics": "Metabolismo de primer paso hepático casi del 100%; formulaciones sublinguales, parches transdérmicos o infusión IV continua.",
+      "clinical": "Alivio y prevención inmediata de crisis de angina de pecho, síndrome coronario agudo y edema agudo de pulmón cardiogénico.",
+      "rams": "Cefalea pulsátil intensa, hipotensión ortostática y taquicardia refleja. Desarrollo de tolerancia (taquifilaxia) que requiere un intervalo libre de nitratos de 8-12 h diarias."
+    },
+    {
+      "id": "u2_heparina",
+      "unit": "u2",
+      "chapter": "Cap. 36",
+      "name": "Heparina No Fraccionada (HNF)",
+      "category": "Anticoagulantes Parenterales",
+      "mechanism": "Se une a la antitrombina III mediante una secuencia pentasacárida específica, acelerando 1000 veces su tasa de inhibición sobre la trombina (Factor IIa) y el Factor Xa.",
+      "kinetics": "Administración parenteral exclusiva (IV o SC). Se monitoriza mediante el tiempo de tromboplastina parcial activada (aPTT). Reversible con Sulfato de Protamina.",
+      "clinical": "Trombosis venosa profunda, tromboembolia pulmonar, síndrome coronario agudo, anticoagulación en bypass cardiopulmonar y hemodiálisis.",
+      "rams": "Hemorragia, trombocitopenia inducida por heparina mediada por anticuerpos anti-PF4 (HIT tipo II), osteoporosis en uso crónico prolongado."
+    },
+    {
+      "id": "u2_atorvastatina",
+      "unit": "u2",
+      "chapter": "Cap. 37",
+      "name": "Atorvastatina",
+      "category": "Inhibidores de HMG-CoA Reductasa (Estatinas)",
+      "mechanism": "Inhibe competitivamente la HMG-CoA reductasa, enzima limitante de la síntesis de colesterol, desencadenando la sobreexpresión de receptores LDL hepáticos.",
+      "kinetics": "Metabolizada por CYP3A4. Posee una semivida prolongada (~14 h) que permite dosificar a cualquier hora del día.",
+      "clinical": "Prevención primaria y secundaria de enfermedad cardiovascular aterosclerótica, hipercolesterolemia familiar y dislipidemia mixta.",
+      "rams": "Miopatía, mialgias con elevación de creatina cinasa (CK), rabdomiólisis infrecuente y elevación reversible de transaminasas hepáticas."
+    },
+    {
+      "id": "u2_salbutamol",
+      "unit": "u2",
+      "chapter": "Cap. 44",
+      "name": "Salbutamol (Albuterol)",
+      "category": "Agonistas Adrenérgicos Beta-2 de Acción Corta (SABA)",
+      "mechanism": "Estimula los receptores adrenérgicos beta-2 en el músculo liso bronquial acoplados a Gs, aumentando el AMPc intracelular y produciendo broncodilatación rápida.",
+      "kinetics": "Inicio de acción inhalatoria en 1 a 5 minutos; duración clínica de 3 a 5 horas.",
+      "clinical": "Tratamiento de rescate del broncoespasmo agudo en asma y EPOC; prevención del broncoespasmo inducido por ejercicio.",
+      "rams": "Temblor fino distal de extremidades, taquicardia refleja, palpitaciones e hipopotasemia por translocación celular de K+."
+    },
+    {
+      "id": "u2_dexametasona",
+      "unit": "u2",
+      "chapter": "Cap. 50",
+      "name": "Dexametasona",
+      "category": "Glucocorticoides Sistémicos de Acción Larga",
+      "mechanism": "Agonista del receptor intracelular de glucocorticoides (GR). Inhibe factores proinflamatorios nucleares (NF-kB, AP-1) y bloquea la transcripción de citocinas, COX-2 e iNOS.",
+      "kinetics": "Acción prolongada (duración biológica de 36 a 54 horas); carece prácticamente de actividad mineralocorticoide (no retiene Na+).",
+      "clinical": "Edema cerebral vasogénico (tumores/metástasis), maduración pulmonar fetal en amenaza de parto pretérmino, choque anafiláctico y supresión diagnóstica de Cushing.",
+      "rams": "Hiperglucemia, inmunosupresión e infecciones secundarias, cataratas subcapsulares posteriores, osteonecrosis avascular y síndrome de Cushing yatrógeno."
+    },
+    {
+      "id": "u3_levotiroxina",
+      "unit": "u3",
+      "chapter": "Cap. 47",
+      "name": "Levotiroxina sódica (T4 sintética)",
+      "category": "Hormonas Tiroideas",
+      "mechanism": "Profármaco de T3. En tejidos periféricos se desyoda a liotironina (T3) activa por medio de 5'-desyodasas (D1/D2), estimulando receptores tiroideos nucleares.",
+      "kinetics": "Semivida muy larga (~7 días). Absorción enteral en ayuno estricto (quelada por alimentos, calcio, hierro y café).",
+      "clinical": "Fármaco de elección en hipotiroidismo primario y secundario, coma mixedematoso y terapia de supresión de TSH en carcinoma tiroideo.",
+      "rams": "Tirotoxicosis yatrógena por sobredosis (taquicardia, angina, arritmias, osteoporosis acelerada en ancianos)."
+    },
+    {
+      "id": "u3_metformina",
+      "unit": "u3",
+      "chapter": "Cap. 51",
+      "name": "Metformina",
+      "category": "Biguanidas Antidiabéticas",
+      "mechanism": "Activa la AMPK mitocondrial en el hepatocito suprimiendo la gluconeogénesis hepática y mejorando la sensibilidad a la insulina sin inducir secreción pancreática.",
+      "kinetics": "No se metaboliza en hígado; se excreta inalterada por secreción tubular renal. No produce hipoglucemia en monoterapia.",
+      "clinical": "Fármaco de primera línea en Diabetes Mellitus tipo 2 y síndrome de ovario poliquístico.",
+      "rams": "Efectos gastrointestinales (diarrea, náuseas), déficit crónico de vitamina B12; acidosis láctica infrecuente pero potencialmente mortal (contraindicada en eGFR < 30 mL/min)."
+    },
+    {
+      "id": "u3_omeprazol",
+      "unit": "u3",
+      "chapter": "Cap. 53",
+      "name": "Omeprazol / Esomeprazol",
+      "category": "Inhibidores de la Bomba de Protones (IBP)",
+      "mechanism": "Profármaco activado en canalículos ácidos a sulfenamida tetracíclica que inactiva covalentemente e irreversiblemente a la H+/K+-ATPasa de las células parietales.",
+      "kinetics": "Semivida plasmática breve (1-2 h), pero supresión ácida prolongada (24-48 h). Debe tomarse 30-60 min antes del primer alimento del día.",
+      "clinical": "Enfermedad por reflujo gastroesofágico, esofagitis erosiva, úlcera gastroduodenal, erradicación de H. pylori, síndrome de Zollinger-Ellison.",
+      "rams": "Hipomagnesemia, déficit de B12 en uso crónico, aumento del riesgo de fracturas óseas e infección por C. difficile. Inhibición de CYP2C19."
+    },
+    {
+      "id": "u3_ciprofloxacino",
+      "unit": "u3",
+      "chapter": "Cap. 57",
+      "name": "Ciprofloxacino",
+      "category": "Fluoroquinolonas",
+      "mechanism": "Inhibe la DNA girasa (topoisomerasa II) en bacterias gramnegativas y la topoisomerasa IV en grampositivas, bloqueando la replicación y condensación cromosómica.",
+      "kinetics": "Buena biodisponibilidad oral interferida por cationes polivalentes (calcio, antiácidos, hierro). Eliminación renal.",
+      "clinical": "Infecciones de vías urinarias complicadas, prostatitis bacteriana, diarreas bacterianas invasoras (Shigella, Salmonella), Pseudomonas aeruginosa.",
+      "rams": "Tendinopatía y rotura del tendón de Aquiles, prolongación del intervalo QTc, neuropatía periférica y alteración del SNC (delirio/confusión)."
+    },
+    {
+      "id": "u3_ceftriaxona",
+      "unit": "u3",
+      "chapter": "Cap. 58",
+      "name": "Ceftriaxona",
+      "category": "Cefalosporinas de 3.ª Generación",
+      "mechanism": "Inhibe la transpeptidación bacteriana fijándose covalentemente a las proteínas ligadoras de penicilina (PBP) de la envoltura bacteriana.",
+      "kinetics": "Semivida prolongada (~8 h) de administración parenteral cada 24 h. Excreción mixta balanceada (60% renal, 40% biliar); no requiere ajuste en falla renal aislada.",
+      "clinical": "Meningitis bacteriana aguda, gonorrea, neumonía adquirida en la comunidad, peritonitis bacteriana espontánea y neuroborreliosis (Lyme).",
+      "rams": "Pseudolitiasis biliar reversible (barro biliar cálcico), reacciones de hipersensibilidad alérgica y disbiosis intestinal."
+    },
+    {
+      "id": "u4_fenitoina",
+      "unit": "u4",
+      "chapter": "Cap. 20",
+      "name": "Difenilhidantoína (Fenitoína)",
+      "category": "Anticonvulsivos moduladores de canales de Na+",
+      "mechanism": "Prolonga selectivamente el estado inactivado de los canales de sodio activados por voltaje, bloqueando descargas repetitivas focales y generalizadas sostenidas.",
+      "kinetics": "Cinética no lineal de saturación (Michaelis-Menten). Alta unión a albúmina (90%). Potente inductor enzimático de múltiples isoformas de CYP.",
+      "clinical": "Crisis epilépticas focales y tonicoclónicas generalizadas bilaterales, estado epiléptico convulsivo (tras benzodiacepina). Ineficaz en ausencias.",
+      "rams": "Hiperplasia gingival, hirsutismo, nistagmo, ataxia cerebelosa, osteomalacia y teratogénesis (síndrome hidantoínico fetal)."
+    },
+    {
+      "id": "u4_diazepam",
+      "unit": "u4",
+      "chapter": "Cap. 22",
+      "name": "Diazepam",
+      "category": "Benzodiacepinas",
+      "mechanism": "Modulador alostérico positivo del receptor GABA-A que incrementa la frecuencia de apertura del canal de Cl-, potenciando la inhibición mediada por GABA.",
+      "kinetics": "Altamente liposoluble con rápida distribución al SNC. Metabolitos activos de vida media extraordinariamente prolongada (nordiazepam: >60 h).",
+      "clinical": "Manejo agudo del estado epiléptico, crisis convulsivas febriles, espasmos musculares esqueléticos y síndrome de abstinencia alcohólica aguda.",
+      "rams": "Somnolencia, ataxia, depresión respiratoria (sobre todo si se asocia a opioides/etanol), desarrollo de tolerancia farmacológica y dependencia física."
+    },
+    {
+      "id": "u4_gentamicina",
+      "unit": "u4",
+      "chapter": "Cap. 59",
+      "name": "Gentamicina / Amikacina",
+      "category": "Aminoglucósidos",
+      "mechanism": "Se unen de forma irreversible a la subunidad ribosomal bacteriana 30S, provocando lectura errónea del código de mRNA e inhibición bactericida de la síntesis proteica.",
+      "kinetics": "Policationes polares; no se absorben por vía oral ni cruzan al SNC. Actividad bactericida dependiente de la concentración con efecto posantibiótico prolongado.",
+      "clinical": "Sepsis grave y endocarditis por bacilos gramnegativos aerobios facultativos (enterobacterias, P. aeruginosa) en combinación con betalactámicos.",
+      "rams": "Nefrotoxicidad no oligúrica por necrosis tubular aguda y ototoxicidad irreversible vestibular y auditiva (daño a células ciliadas del VIII par)."
+    },
+    {
+      "id": "u4_anfotericina_b",
+      "unit": "u4",
+      "chapter": "Cap. 61",
+      "name": "Anfotericina B (Formulaciones lipídicas / Desoxicolato)",
+      "category": "Antimicóticos Poliénicos",
+      "mechanism": "Se une con alta afinidad al ergosterol fúngico de membrana, formando poros circulares transmembrana que provocan pérdida de iones K+ y lisis fúngica letal.",
+      "kinetics": "Administración intravenosa lenta. Las formulaciones liposomales reducen drásticamente la exposición tóxica en los túbulos renales.",
+      "clinical": "Tratamiento empírico y definitivo en micosis invasoras que amenazan la vida (criptococosis meníngea, mucormicosis, histoplasmosis y aspergilosis invasiva).",
+      "rams": "Nefrotoxicidad dependiente de la dosis acumulada (vasoconstricción de arteriola aferente y necrosis tubular con hipopotasemia e hipomagnesemia severas)."
+    },
+    {
+      "id": "u4_dolutegravir",
+      "unit": "u4",
+      "chapter": "Cap. 64",
+      "name": "Dolutegravir",
+      "category": "Inhibidores de la Integrasa de VIH (INSTI)",
+      "mechanism": "Inhibe específicamente la transferencia de hebras mediada por la integrasa retroviral, impidiendo la integración del DNA complementario de VIH en el genoma celular humano.",
+      "kinetics": "Vía oral una vez al día; no requiere coadministración con potenciadores farmacocinéticos (ritonavir/cobicistat). Elevadísima barrera genética a mutaciones.",
+      "clinical": "Pilar preferido de primera línea en regímenes combinados de rescate y de inicio antirretroviral tanto para VIH-1 como para VIH-2.",
+      "rams": "Cefalea, insomnio, aumento ponderal. Quelación farmacológica al coadministrarse con antiácidos o suplementos de cationes divalentes."
+    }
+  ],
+  "flashcards": [
+    {
+      "unit": "u1",
+      "chapter": "Cap. 11",
+      "category": "SNA Colinergia",
+      "question": "¿Cuál es la causa farmacológica de la visión borrosa producida por la atropina?",
+      "answer": "La atropina bloquea los receptores muscarínicos M3 en el músculo ciliar, paralizando la acomodación para la visión cercana (cicloplejía), además de relajar el esfínter del iris provocando midriasis pasiva."
+    },
+    {
+      "unit": "u1",
+      "chapter": "Cap. 13",
+      "category": "Unión Neuromuscular",
+      "question": "¿Qué diferencia electrofisiológica fundamental existe entre un bloqueador neuromuscular competitivo (rocuronio) y uno despolarizante (succinilcolina)?",
+      "answer": "El bloqueador competitivo actúa como antagonista puro del receptor Nm impidiendo la despolarización; la succinilcolina actúa como agonista persistente provocando fasciculaciones iniciales y despolarización sostenida refractaria (bloqueo Fase I)."
+    },
+    {
+      "unit": "u2",
+      "chapter": "Cap. 29",
+      "category": "Farmacología Renal",
+      "question": "¿Por qué los diuréticos de asa (como furosemida) mantienen su eficacia natriurética incluso en pacientes con tasas de filtrado glomerular marcadamente reducidas?",
+      "answer": "Porque actúan en la rama ascendente gruesa del asa de Henle, sitio responsable de la reabsorción masiva del 25% del sodio filtrado, sobrepasando la capacidad compensatoria de los segmentos distales."
+    },
+    {
+      "unit": "u2",
+      "chapter": "Cap. 31",
+      "category": "Cardiopatía Isquémica",
+      "question": "¿Por qué está estrictamente contraindicada la coadministración de Nitroglicerina con Sildenafilo (inhibidor de PDE5)?",
+      "answer": "Porque la nitroglicerina incrementa la síntesis de GMPc mientras que el sildenafilo bloquea su degradación; la acumulación sinérgica masiva de GMPc relaja de forma extrema el músculo liso vascular, provocando vasodilatación generalizada, hipotensión catastrófica, choque y muerte súbita."
+    },
+    {
+      "unit": "u2",
+      "chapter": "Cap. 42",
+      "category": "Antiinflamatorios",
+      "question": "¿A qué mecanismo fisiopatológico se debe el daño gastroduodenal inducido por el consumo crónico de AINEs tradicionales?",
+      "answer": "A la inhibición de la enzima COX-1 gástrica, lo que suprime la biosíntesis de prostaglandinas citoprotectoras (PGE2 y PGI2), reduciendo drásticamente la producción de moco, la secreción de bicarbonato y el flujo sanguíneo de la mucosa."
+    },
+    {
+      "unit": "u3",
+      "chapter": "Cap. 47",
+      "category": "Farmacología Tiroidea",
+      "question": "¿Por qué en una crisis tirotóxica o tormenta tiroidea se prefiere el Propiltiouracilo (PTU) sobre el Metimazol como tionamida de choque inicial?",
+      "answer": "Porque el PTU no solo bloquea la síntesis de nuevas hormonas tiroideas (TPO), sino que además inhibe inmediatamente la enzima 5'-desyodasa periférica tipo D1, disminuyendo la conversión tisular periférica de T4 a la forma biológicamente activa T3."
+    },
+    {
+      "unit": "u3",
+      "chapter": "Cap. 53",
+      "category": "Tubo Digestivo",
+      "question": "¿Cuál es la razón farmacocinética por la cual los IBP suprimen la secreción ácida durante 24 a 48 horas a pesar de que su semivida en plasma es de apenas 1 a 2 horas?",
+      "answer": "Porque forman enlaces covalentes disulfuro irreversibles con los residuos de cisteína de la bomba H+/K+-ATPasa; la recuperación de la secreción requiere la síntesis de novo e inserción de moléculas enzimáticas completamente nuevas en la membrana celular."
+    },
+    {
+      "unit": "u3",
+      "chapter": "Cap. 57",
+      "category": "Antimicrobianos",
+      "question": "¿Por qué la combinación de Trimetoprim con Sulfametoxazol ejerce un efecto bactericida sinérgico cuando cada fármaco por separado suele ser bacteriostático?",
+      "answer": "Porque ejecutan un bloqueo secuencial en la misma vía metabólica: el sulfametoxazol inhibe la dihidropteroato sintasa y el trimetoprim bloquea la dihidrofolato reductasa, colapsando por completo la síntesis de tetrahidrofolato y DNA microbiano."
+    },
+    {
+      "unit": "u4",
+      "chapter": "Cap. 20",
+      "category": "SNC y Epilepsia",
+      "question": "¿A qué se debe el desarrollo de hiperplasia gingival y osteomalacia en pacientes tratados a largo plazo con Fenitoína?",
+      "answer": "La hiperplasia gingival se debe a alteración del metabolismo del factor de crecimiento plaquetario (PDGF) en fibroblastos gingivales; la osteomalacia resulta de la inducción masiva de enzimas hepáticas CYP que aceleran el catabolismo y degradación de la vitamina D."
+    },
+    {
+      "unit": "u4",
+      "chapter": "Cap. 59",
+      "category": "Aminoglucósidos",
+      "question": "¿Cuál es el fundamento farmacocinético/farmacodinámico (PK/PD) de la pauta de administración de aminoglucósidos en monodosis diaria alta (intervalo extendido)?",
+      "answer": "Su actividad bactericida es dependiente de la concentración máxima (Cmax/MIC) y poseen un prolongado efecto posantibiótico (PAE). Una dosis única diaria maximiza el pico bactericida y permite periodos valle muy bajos, reduciendo la acumulación tóxica en la corteza renal y oído interno."
+    }
+  ],
+  "quizzes": [
+    {
+      "unit": "u1",
+      "chapter": "Cap. 11",
+      "question": "Un hombre de 68 años con hiperplasia prostática benigna recibe tratamiento con Atropina IV por una bradiarritmia. Horas después se encuentra en incapacidad total para orinar con dolor suprapúbico intenso. ¿Cuál es el mecanismo de esta complicación?",
+      "options": [
+        "Estimulación de receptores adrenérgicos alfa-1 uretrales",
+        "Bloqueo de receptores muscarínicos M3 en el músculo detrusor vesical impidiendo su contracción",
+        "Espasmo mediado por receptores nicotínicos en el esfínter estriado",
+        "Inhibición de la acetilcolinesterasa vesical"
+      ],
+      "correct": 1,
+      "explanation": "El músculo detrusor de la vejiga urinaria se contrae fisiológicamente mediante la estimulación colinérgica parasimpática de receptores M3. Su antagonismo farmacológico por atropina causa relajación del detrusor y retención urinaria aguda."
+    },
+    {
+      "unit": "u2",
+      "chapter": "Cap. 32",
+      "question": "Una mujer hipertensa de 56 años tratada con Enalapril consulta por tos seca no productiva, molesta y persistente de 4 semanas de evolución que no cede con antitusivos. ¿Cuál es la conducta terapéutica de elección recomendada por las guías clínicas?",
+      "options": [
+        "Prescribir codeína en jarabe y continuar enalapril",
+        "Sustituir el IECA por un antagonista de receptores de angiotensina II (ARA-II como Losartán)",
+        "Aumentar la dosis de enalapril",
+        "Añadir un diurético tiazídico para acelerar la eliminación de la bradicinina"
+      ],
+      "correct": 1,
+      "explanation": "La tos por IECA está mediada por la acumulación pulmonar de bradicinina y sustancia P al inhibirse la enzima que las degrada. Los ARA-II (como Losartán) bloquean selectivamente el receptor AT1 sin interferir con la enzima convertidora ni con la bradicinina, resolviendo el síntoma."
+    },
+    {
+      "unit": "u2",
+      "chapter": "Cap. 36",
+      "question": "Paciente hospitalizado con tromboembolia pulmonar masiva recibe infusión continua de Heparina No Fraccionada y al 6.º día de tratamiento presenta una caída del 60% en el recuento plaquetario con nueva trombosis en miembro inferior. ¿Cuál es la sospecha diagnóstica prioritaria?",
+      "options": [
+        "Púrpura trombocitopénica idiopática",
+        "Trombocitopenia inducida por heparina (HIT tipo II) mediada por anticuerpos contra el complejo Heparina-PF4",
+        "Hemorragia digestiva oculta con consumo plaquetario",
+        "Falla medular secundaria a heparina"
+      ],
+      "correct": 1,
+      "explanation": "La HIT tipo II es una complicación inmunológica grave donde anticuerpos IgG reconocen el complejo Heparina-Factor Plaquetario 4 (PF4), provocando agregación plaquetaria intravascular masiva, trombosis venosa o arterial paradójica y trombocitopenia."
+    },
+    {
+      "unit": "u3",
+      "chapter": "Cap. 51",
+      "question": "Varón de 59 años con diabetes mellitus tipo 2 y obesidad grado II acude a consulta. Se desea iniciar un antidiabético oral que favorezca la pérdida de peso y reduzca el riesgo de progresión de enfermedad renal crónica mediante glucosuria. ¿Cuál de los siguientes es el más adecuado?",
+      "options": [
+        "Glimepirida",
+        "Pioglitazona",
+        "Empagliflozina",
+        "Repaglinida"
+      ],
+      "correct": 2,
+      "explanation": "La Empagliflozina es un inhibidor de SGLT2 que induce glucosuria y natriuresis osmótica, produciendo reducción de HbA1c, pérdida de peso, disminución de la presión intraglomerular y notable nefroprotección y cardioprotección."
+    },
+    {
+      "unit": "u3",
+      "chapter": "Cap. 58",
+      "question": "Un paciente con neumonía adquirida en la comunidad e historia confirmada de shock anafiláctico previo por Penicilina G requiere cobertura parenteral contra gérmenes gramnegativos. ¿Por qué debe evitarse el uso rutinario de Ceftriaxona u otros betalactámicos en este paciente?",
+      "options": [
+        "Porque comparten la misma vía de excreción biliar",
+        "Por el riesgo de reactividad cruzada inmunológica al compartir el núcleo o anillo central betalactámico",
+        "Porque ambos quelan cationes divalentes en sangre",
+        "Porque causan toxicidad mitocondrial sinérgica"
+      ],
+      "correct": 1,
+      "explanation": "En pacientes con antecedentes de reacciones mediadas por IgE graves e inmediatas (anafilaxia, angioedema laríngeo) frente a penicilinas, los betalactámicos conllevan riesgo de reactividad cruzada y están contraindicados para uso empírico."
+    },
+    {
+      "unit": "u4",
+      "chapter": "Cap. 20",
+      "question": "Una niña de 7 años es diagnosticada con crisis de ausencia típicas tras presentar desconexiones breves del entorno con descargas de punta-onda a 3 Hz en el EEG. ¿Cuál de los siguientes fármacos es ineficaz y podría empeorar o precipitar crisis en este cuadro?",
+      "options": [
+        "Etosuximida",
+        "Ácido valproico",
+        "Fenitoína",
+        "Lamotrigina"
+      ],
+      "correct": 2,
+      "explanation": "La Fenitoína y la Carbamazepina (bloqueadores puros de canales de sodio) no son efectivas contra las crisis de ausencia y paradójicamente pueden agravarlas o desencadenar estado de ausencia. El tratamiento de elección son los bloqueadores de canales de calcio tipo T como la Etosuximida o el Ácido Valproico."
+    },
+    {
+      "unit": "u4",
+      "chapter": "Cap. 61",
+      "question": "¿Cuál es la medida farmacológica preventiva más importante para disminuir la toxicidad tubular aguda durante la infusión intravenosa de Anfotericina B desoxicolato?",
+      "options": [
+        "Sobrecarga de solución salina isotónica intravenosa (hidratación salina previa)",
+        "Administración concomitante de furosemida a dosis altas",
+        "Acidificación urinaria con cloruro de amonio",
+        "Infusión rápida en bolo menor a 15 minutos"
+      ],
+      "correct": 0,
+      "explanation": "La precarga o sobrecarga con solución salina normal al 0.9% (500 a 1000 mL) antes y después de la infusión atenúa la vasoconstricción renal aferente y la isquemia medular, reduciendo notablemente la nefrotoxicidad de la anfotericina B convencional."
+    }
+  ]
+}
